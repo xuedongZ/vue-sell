@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import VueResource from 'vue-resource';
 import App from './App';
 import goods from 'components/goods/goods';
 import ratings from 'components/ratings/ratings';
@@ -8,6 +9,8 @@ import seller from 'components/seller/seller';
 import 'common/stylus/index.styl';
 
 Vue.use(VueRouter);
+Vue.use(VueResource);
+
 let app = Vue.extend(App); // 挂载App组件拿到app对象
 let router = new VueRouter({
   linkActiveClass: 'active'
@@ -26,4 +29,4 @@ router.map({
 
 router.start(app, '#app');
 
-router.go('/goods');
+router.go('/seller');

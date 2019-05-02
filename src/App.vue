@@ -18,9 +18,26 @@
 
 </template>
 
-<script>
-import header from './components/header/header.vue';
+<script type="text/ecmascript-6">
+import header from 'components/header/header.vue';
+
+const ERR_OK = 0;
+
 export default {
+  data() {
+    return {
+      seller: {} // 通过发送ajax请求拿到seller对象，塞给他
+    };
+  },
+  created() {
+    this.$http.get('/api/seller').then(response => {
+      response = response.body;
+      if (response.errno === ERR_OK) {
+        this.seller = response.data;
+        console.log(this.seller);
+      }
+    });
+  },
   components: {
     'v-header': header
   }
