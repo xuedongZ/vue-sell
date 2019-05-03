@@ -17,28 +17,59 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
-      <div v-if="seller.supports" class="support-count">
+      <div v-if="seller.supports" class="support-count" @click="showDetail">
         <span class="count">{{seller.supports.length}}个</span>
         <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
-    <div class="bulletin-wrapper">
+    <div class="bulletin-wrapper" @click="showDetail">
       <span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right"></i>
+    </div>
+    <div class="background">
+      <img :src="seller.avatar" width="100%" height="100%">
+    </div>
+    <div v-show="detailShow" class="detail">
+      <div class="detail-wrapper clearfix">
+        <div class="detail-main">
+          <h1 class="name">{{seller.name}}</h1>
+          <div class="star-wrapper">
+            <star :size="48" :score="seller.score"></star>
+          </div>
+
+        </div>
+      </div>
+      <div class="detail-close">
+        <i class="icon-close"></i>
+      </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import star from 'components/star/star';
+
 export default {
-  data() {},
   props: {
     seller: {
       type: Object
     }
   },
+  data() {
+    return {
+      detailShow: false
+    };
+  },
+  methods: {
+    showDetail() {
+      this.detailShow = true;
+    }
+  },
   created() {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+  },
+  components: {
+    star
   }
 };
 </script>
@@ -46,8 +77,10 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
 @import "../../common/stylus/mixin";
 .header
+  position: relative
+  overflow: hidden
   color: #fff
-  background: #999
+  background: rgba(7,17,27,0.5)
   .content-wrapper
     position: relative
     padding: 24px 12px 18px 24px
@@ -118,16 +151,18 @@ export default {
         line-height: 24px
         font-size: 10px
   .bulletin-wrapper
+    position: relative
     height: 28px
     line-height: 28px
     padding: 0 22px 0 12px
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
+    background: rgba(7,17,27,0.2)
     .bulletin-title
       display: inline-block
       vertical-align: top
-      margin-top: 7px
+      margin-top: 8px
       width: 22px
       height: 12px
       bg-image('bulletin')
@@ -137,5 +172,55 @@ export default {
       vertical-align: top
       margin: 0 4px
       font-size: 10px
+    .icon-keyboard_arrow_right
+      position: absolute
+      font-size: 10px
+      right: 12px
+      top: 9px
+  .background
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    z-index: -1
+    filter: blur(10px)
+  .detail
+    position: fixed
+    z-index: 100
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    overflow: auto
+    background: rgba(7,17,27,0.8)
+    .detail-wrapper
+      width: 100%
+      min-height: 100%
+      .detail-main
+        margin-top 64px
+        padding-bottom: 64px
+        .name
+          line-height: 16px
+          text-align: center
+          font-size: 16px
+          font-weight: 700
+        .star-wrapper
+          margin-top 16px
+          padding: 2px 0
+          text-align: center
+    .detail-close
+      position: relative
+      width: 32px
+      height: 32px
+      margin: -64px auto 0 auto
+      clear: both
+      font-size: 32px
+
+
+
+
+
+
 
 </style>
