@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="shopcart">
-      <div class="content">
+      <div class="content" @click="toggleList">
         <div class="content-left">
           <div class="logo-wrapper">
             <div class="logo" :class="{'highlight':totalCount>0}">
@@ -23,12 +23,33 @@
           <div class="inner inner-hook"></div>
         </div>
       </div>
+      <div class="shopcart-list" v-show="listShow">
+        <div class="list-header">
+          <h1 class="title">购物车</h1>
+          <span class="empty">清空</span>
+        </div>
+        <div class="list-content">
+          <ul>
+            <li class="food" v-for="food in selectFoods">
+              <span class="name">{{food.name}}</span>
+              <div class="price">
+                <span class="¥{{food.price*food.count}}"></span>
+              </div>
+              <div class="cartcontrol-warpper">
+                <cartcontrol :food="food"></cartcontrol>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
 </template>
 
 <script type="text/ecmascript-6">
+import cartcontrol from 'components/cartcontrol/cartcontrol';
+
 export default {
   props: {
     selectFoods: {
@@ -70,7 +91,8 @@ export default {
           show: false
         }
       ],
-      dropBalls: []
+      dropBalls: [],
+      fold: true
     };
   },
   computed: {
@@ -104,6 +126,14 @@ export default {
       } else {
         return 'enough';
       }
+    },
+    listShow() {
+      if (!this.totalCount) {
+        this.fold = true;
+        return false;
+      }
+      let show = !this.fold;
+      return show;
     }
   },
   methods: {
@@ -117,6 +147,12 @@ export default {
           return;
         }
       }
+    },
+    toggleList() {
+      if (!this.totalCount) {
+        return;
+      }
+      this.fold = !this.fold;
     }
   },
   transitions: {
@@ -158,7 +194,9 @@ export default {
       }
     }
   },
-  components: {}
+  components: {
+    cartcontrol
+  }
 };
 </script>
 
