@@ -31,8 +31,8 @@ export default {
       default() {
         return [
           {
-            price: 10,
-            count: 1
+            // price: 10,
+            // count: 1
           }
         ];
       }
@@ -177,8 +177,4 @@ export default {
           &.enough
             background: #00b43c
             color: #fff
-
-
-
-
 </style>
