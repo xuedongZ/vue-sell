@@ -10,10 +10,10 @@
     </div>
     <div class="foods-wrapper" v-el:foods-wrapper>
       <ul>
-        <li @click="selectFood(food, $event)" v-for="item in goods" class="food-list food-list-hook">
+        <li v-for="item in goods" class="food-list food-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li v-for="food in item.foods" class="food-item border-1px">
+            <li @click="selectFood(food, $event)" v-for="food in item.foods" class="food-item border-1px">
               <div class="icon">
                 <img width="57" height="57" :src="food.icon">
               </div>
@@ -37,7 +37,7 @@
       </ul>
     </div>
     <shopcart v-ref:shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
-    <food :food="selectedFood"></food>
+    <food :food="selectedFood" v-ref:food></food>
   </div>
 </template>
 
@@ -116,6 +116,7 @@ export default {
         return;
       }
       this.selectedFood = food;
+      this.$refs.food.show();
     },
     _drop(target) {
       // 优化体验，异步执行下落动画
