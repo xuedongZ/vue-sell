@@ -66,8 +66,8 @@ export default {
   methods: {
     show() {
       this.showFlag = true;
-      this.selectType = 0;
-      this.onlyContent = true;
+      this.selectType = ALL;
+      this.onlyContent = false;
       this.$nextTick(() => {
         // nextTick保证高度是被渲染的。
         if (!this.scroll) {
