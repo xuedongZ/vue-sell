@@ -125,9 +125,4 @@ export default {
         font-size: 24px
       .text
         font-size: 12px
-
-
-
-
-
 </style>
